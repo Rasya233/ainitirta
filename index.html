@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Aini, From Rasya 🌹</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --rose: #c0435a;
+    --rose-light: #e8a0ae;
+    --rose-pale: #fdf0f2;
+    --gold: #c9a84c;
+    --cream: #faf6f0;
+    --dark: #1a0a0e;
+    --text: #3a1a22;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--text);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* Petals */
+  .petals-canvas { position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden; }
+  .petal {
+    position:absolute;top:-40px;
+    background:radial-gradient(ellipse at 30% 30%,#f4b8c4,#c0435a88);
+    border-radius:50% 10% 50% 10%;
+    opacity:0;
+    animation:fallPetal linear infinite;
+  }
+  @keyframes fallPetal {
+    0%  {transform:translateY(0) translateX(0) rotate(0deg);opacity:0}
+    5%  {opacity:.7}
+    90% {opacity:.5}
+    100%{transform:translateY(110vh) translateX(60px) rotate(380deg);opacity:0}
+  }
+
+  /* Hero — pembuka tetap Inggris */
+  .hero {
+    position:relative;min-height:100vh;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:60px 24px;z-index:1;
+  }
+  .hero::before {
+    content:'';position:absolute;inset:0;z-index:-1;
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 40%,#f9e8ec 0%,transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 80%,#fce4e8 0%,transparent 60%),
+      radial-gradient(ellipse 30% 30% at 80% 20%,#fceef0 0%,transparent 60%);
+  }
+  .to-label {
+    font-weight:200;font-size:11px;letter-spacing:.35em;text-transform:uppercase;
+    color:var(--rose);opacity:0;animation:fadeUp 1s ease .3s forwards;
+  }
+  .hero-name {
+    font-family:'Cormorant Garamond',serif;font-weight:300;
+    font-size:clamp(3.2rem,10vw,6.5rem);line-height:1.05;color:var(--dark);
+    margin:12px 0 6px;opacity:0;animation:fadeUp 1s ease .6s forwards;
+  }
+  .hero-name span{font-style:italic;color:var(--rose)}
+  .hero-sub {
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:clamp(1rem,3vw,1.4rem);color:#8b4a57;margin-bottom:40px;
+    opacity:0;animation:fadeUp 1s ease .9s forwards;
+  }
+  .heart-divider {
+    display:flex;align-items:center;gap:16px;margin:20px auto 30px;
+    opacity:0;animation:fadeUp 1s ease 1.1s forwards;
+  }
+  .heart-divider::before,.heart-divider::after {
+    content:'';width:80px;height:.5px;
+    background:linear-gradient(to right,transparent,var(--rose-light));
+  }
+  .heart-divider::after{background:linear-gradient(to left,transparent,var(--rose-light))}
+  .heart-divider .hrt{font-size:18px;color:var(--rose);animation:pulse 2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}
+}
+
+ .scroll-hint {
+  position: absolute;
+  bottom: 32px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  opacity: 0;
+  animation: fadeUp 1s ease 2s forwards;
+}
+  .scroll-hint span{font-size:10px;letter-spacing:.2em;color:var(--rose-light);text-transform:uppercase}
+  .scroll-arrow{width:1px;height:40px;background:linear-gradient(to bottom,var(--rose-light),transparent);animation:scrollPulse 1.5s ease-in-out infinite}
+  @keyframes scrollPulse{0%,100%{opacity:.4}50%{opacity:1}}
+
+  /* Photo */
+  .photo-section {
+    position:relative;z-index:1;padding:80px 24px 40px;
+    display:flex;flex-direction:column;align-items:center;text-align:center;
+  }
+  .photo-label{font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--rose-light);margin-bottom:28px}
+  .photo-frame {
+    width:280px;height:340px;
+    border:.5px solid #e8c8ce;
+    box-shadow:0 4px 40px rgba(192,67,90,.12),0 0 0 8px rgba(253,240,242,.7);
+    overflow:hidden;position:relative;
+    opacity:0;transform:translateY(24px);
+    transition:opacity .8s ease,transform .8s ease;
+  }
+  .photo-frame.visible{opacity:1;transform:translateY(0)}
+  .photo-frame img{width:100%;height:100%;object-fit:cover;display:block}
+  .photo-placeholder {
+    width:100%;height:100%;
+    background:linear-gradient(135deg,#fdf0f2,#f5d5da);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+  }
+  .photo-placeholder .ph-icon{font-size:40px;opacity:.4}
+  .photo-placeholder .ph-text{font-size:12px;color:var(--rose-light);letter-spacing:.05em;text-align:center;padding:0 20px;line-height:1.7}
+  .photo-caption {
+    margin-top:20px;font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:1.1rem;color:#8b4a57;opacity:0;transition:opacity .8s ease .3s;
+  }
+  .photo-caption.visible{opacity:1}
+
+  /* Letter */
+  .letter-section{position:relative;z-index:1;padding:60px 24px 100px;display:flex;justify-content:center}
+  .letter-card {
+    background:#fff;max-width:680px;width:100%;
+    padding:clamp(36px,6vw,72px) clamp(32px,6vw,68px);
+    border:.5px solid #e8c8ce;
+    box-shadow:0 2px 40px rgba(192,67,90,.07),0 0 0 8px rgba(253,240,242,.6);
+    position:relative;opacity:0;transform:translateY(30px);
+    transition:opacity .8s ease,transform .8s ease;
+  }
+  .letter-card.visible{opacity:1;transform:translateY(0)}
+  .letter-card::before {
+    content:'\201C';position:absolute;top:-10px;left:36px;
+    font-family:'Cormorant Garamond',serif;font-size:120px;
+    color:var(--rose-light);line-height:1;opacity:.35;
+  }
+  .letter-date{font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--rose-light);margin-bottom:28px}
+  .letter-dear{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.5rem;color:var(--rose);margin-bottom:24px}
+  .letter-body{font-family:'Cormorant Garamond',serif;font-size:clamp(1.05rem,2.2vw,1.2rem);line-height:1.95;color:#4a2530}
+  .letter-body p+p{margin-top:20px}
+  .letter-sign{margin-top:36px;text-align:right;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.3rem;color:var(--rose)}
+
+  /* Reasons */
+  .reasons-section{position:relative;z-index:1;padding:60px 24px 100px;text-align:center}
+  .section-label{font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--rose-light);margin-bottom:12px}
+  .section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3rem);font-weight:300;color:var(--dark);margin-bottom:60px}
+  .section-title em{font-style:italic;color:var(--rose)}
+  .reasons-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;max-width:900px;margin:0 auto}
+  .reason-card {
+    background:#fff;border:.5px solid #f0d0d5;padding:32px 28px;text-align:left;
+    opacity:0;transform:translateY(20px);
+    transition:opacity .6s ease,transform .6s ease,box-shadow .3s;
+  }
+  .reason-card.visible{opacity:1;transform:translateY(0)}
+  .reason-card:hover{box-shadow:0 8px 30px rgba(192,67,90,.1)}
+  .reason-num{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:var(--rose-light);line-height:1;margin-bottom:12px}
+  .reason-title{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;color:var(--rose);margin-bottom:8px}
+  .reason-text{font-size:.88rem;line-height:1.75;color:#6b3a44;font-weight:300}
+
+  /* Closing */
+  .closing-section{position:relative;z-index:1;background:var(--dark);padding:100px 24px;text-align:center;overflow:hidden}
+  .closing-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 50% 50%,#3a0d18,transparent)}
+  .closing-quote{position:relative;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.4rem,4vw,2.2rem);color:#f4c8d0;max-width:640px;margin:0 auto 32px;line-height:1.7;font-weight:300}
+  .closing-from{position:relative;font-size:11px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold)}
+  .rose-big{font-size:48px;display:block;margin:40px auto 0;animation:floatRose 3s ease-in-out infinite}
+  @keyframes floatRose{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+  /* ── PESAN RAHASIA ── */
+  .secret-trigger {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    padding: 0 24px 80px;
+  }
+  .secret-btn {
+    background: none;
+    border: 0.5px solid var(--rose-light);
+    color: var(--rose-light);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    padding: 12px 32px;
+    cursor: pointer;
+    letter-spacing: 0.15em;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .secret-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--rose-pale);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+    z-index: -1;
+  }
+  .secret-btn:hover { color: var(--rose); border-color: var(--rose); }
+  .secret-btn:hover::before { transform: scaleX(1); }
+
+  /* Overlay modal */
+  .secret-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 10, 14, 0.85);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+  .secret-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .secret-modal {
+    background: #fff9f9;
+    border: 0.5px solid #e8c8ce;
+    max-width: 480px;
+    width: 100%;
+    padding: 52px 44px;
+    text-align: center;
+    position: relative;
+    transform: translateY(20px) scale(0.97);
+    transition: transform 0.4s ease;
+    box-shadow: 0 0 0 8px rgba(253,240,242,0.4);
+  }
+  .secret-overlay.open .secret-modal {
+    transform: translateY(0) scale(1);
+  }
+  .secret-modal .s-hearts {
+    font-size: 28px;
+    display: block;
+    margin-bottom: 24px;
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+  .secret-modal .s-title {
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--rose-light);
+    margin-bottom: 20px;
+  }
+  .secret-modal .s-message {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.3rem, 4vw, 1.7rem);
+    font-style: italic;
+    color: var(--rose);
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+  .secret-modal .s-sign {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--rose-light);
+    margin-bottom: 32px;
+    display: block;
+  }
+  .secret-close {
+    background: none;
+    border: 0.5px solid var(--rose-light);
+    color: var(--rose-light);
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 10px 28px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .secret-close:hover { background: var(--rose-pale); color: var(--rose); border-color: var(--rose); }
+
+  /* Petal burst inside modal */
+  .burst-petal {
+    position: absolute;
+    font-size: 14px;
+    pointer-events: none;
+    animation: burstOut 1.2s ease forwards;
+    opacity: 0;
+  }
+  @keyframes burstOut {
+    0%   { opacity:1; transform: translate(0,0) rotate(0deg) scale(0.5); }
+    100% { opacity:0; transform: translate(var(--tx), var(--ty)) rotate(var(--tr)) scale(1.2); }
+  }
+
+  /* =========================================================
+   RESPONSIVE MOBILE
+   ========================================================= */
+@media (max-width: 768px) {
+
+  /* Hero */
+  .hero {
+    padding: 40px 20px;
+  }
+
+  .hero-name {
+    font-size: 3.2rem;
+    line-height: 1.1;
+  }
+
+  .hero-sub {
+    font-size: 1rem;
+    padding: 0 10px;
+  }
+
+  .heart-divider::before,
+  .heart-divider::after {
+    width: 50px;
+  }
+
+  /* Foto */
+  .photo-section {
+    padding: 60px 20px 30px;
+  }
+
+  .photo-frame {
+    width: 220px;
+    height: 280px;
+  }
+
+  .photo-caption {
+    font-size: 1rem;
+    padding: 0 10px;
+  }
+
+  /* Surat */
+  .letter-section {
+    padding: 40px 16px 80px;
+  }
+
+  .letter-card {
+    padding: 32px 24px;
+  }
+
+  .letter-card::before {
+    font-size: 80px;
+    left: 20px;
+    top: 0;
+  }
+
+  .letter-dear {
+    font-size: 1.3rem;
+  }
+
+  .letter-body {
+    font-size: 1rem;
+    line-height: 1.9;
+  }
+
+  .letter-sign {
+    font-size: 1.1rem;
+  }
+
+  /* Reasons */
+  .reasons-section {
+    padding: 40px 16px 80px;
+  }
+
+  .section-title {
+    margin-bottom: 40px;
+  }
+
+  .reasons-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .reason-card {
+    padding: 26px 22px;
+  }
+
+  /* Closing */
+  .closing-section {
+    padding: 80px 20px;
+  }
+
+  .closing-quote {
+    line-height: 1.8;
+  }
+
+  /* Secret modal */
+  .secret-modal {
+    padding: 40px 24px;
+  }
+
+  .secret-modal .s-message {
+    font-size: 1.2rem;
+  }
+
+}
+
+  /* =========================================================
+   MUSIC BUTTON
+   ========================================================= */
+.music-btn{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  width:55px;
+  height:55px;
+  border-radius:50%;
+  border:none;
+  background:rgba(255,255,255,0.15);
+  backdrop-filter:blur(10px);
+  color:#fff;
+  font-size:22px;
+  cursor:pointer;
+  z-index:9999;
+  transition:all .3s ease;
+  border:1px solid rgba(255,255,255,.2);
+}
+
+.music-btn:hover{
+  transform:scale(1.08);
+  background:rgba(255,255,255,.25);
+}
+
+.music-btn.playing{
+  animation:pulseMusic 2s infinite;
+}
+
+@keyframes pulseMusic{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.12);}
+  100%{transform:scale(1);}
+}
+</style>
+</head>
+<body>
+  <!-- Background Music -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Tombol Musik -->
+<button class="music-btn" id="musicBtn">🌹</button>
+
+<div class="petals-canvas" id="petals"></div>
+
+<!-- ============================================================
+     HERO — Pembuka (Bahasa Inggris, sengaja dibiarkan)
+     ============================================================ -->
+<section class="hero">
+  <p class="to-label">A love letter to</p>
+  <h1 class="hero-name">Aini <span>Tirta</span><br>Fawzyah</h1>
+  <p class="hero-sub">from someone whose world got brighter because of you</p>
+  <div class="heart-divider"><span class="hrt">♥</span></div>
+  <div class="scroll-hint">
+    <span>read on</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOTO PACAR
+     ──────────────────────────────────────────────────────────
+     CARA TAMBAH FOTO:
+     1. Rename foto kamu menjadi:  aini.jpg
+     2. Letakkan file aini.jpg di folder yang SAMA dengan
+        file HTML ini.
+     3. Simpan & buka ulang di browser — foto langsung muncul!
+     ============================================================ -->
+<section class="photo-section">
+  <p class="photo-label">Aini punk mjk</p>
+  <div class="photo-frame" id="photoFrame">
+    <img src="Aini.jpeg" alt="Aini Tirta Fawzyah"
+         onerror="this.style.display='none';document.getElementById('ph').style.display='flex'">
+    <div class="photo-placeholder" id="ph" style="display:none">
+      <span class="ph-icon">📷</span>
+      <span class="ph-text">
+        Rename fotomu menjadi <strong>aini.jpg</strong><br>
+        lalu taruh di folder yang sama<br>
+        dengan file HTML ini
+      </span>
+    </div>
+  </div>
+  <p class="photo-caption" id="photoCaption">Cintaku, selamanya. 🌹</p>
+</section>
+
+<!-- ============================================================
+     SURAT CINTA — Bahasa Indonesia
+     Ganti isi paragraf sesuai perasaanmu!
+     ============================================================ -->
+<section class="letter-section">
+  <div class="letter-card" id="letterCard">
+
+    <!-- ▼ Ganti tanggal / sub-judul surat ▼ -->
+    <p class="letter-date">For my forever love, Aini</p>
+
+    <p class="letter-dear">Dear Aini..</p>
+    <div class="letter-body">
+
+      <!-- ▼▼▼ GANTI ISI SURAT DI SINI ▼▼▼ -->
+      <p>
+        Ada momen-momen dalam hidup yang datang dengan tenang —
+        bukan dengan sorak-sorai atau kembang api,
+        tapi dengan kehangatan yang begitu lembut hingga membuatmu terkejut.
+        Itulah dirimu bagiku, Aini. Sebuah keajaiban sunyi yang masih selalu membuatku terpesona.
+      </p>
+      <p>
+        Ntah apa yang membuatmu terasa begitu indah dan berharga — sehingga aku merasa beruntung setiap kali memikirkanmu.
+          Mungkin itu caramu tersenyum, atau cara kamu mendengarkan dengan penuh perhatian, atau bagaimana kamu membuat hal-hal sederhana terasa begitu istimewa.
+          Atau mungkin itu hanya karena kamu adalah kamu — dengan segala keunikan dan kehangatan yang kamu bawa ke dunia ini.
+          Yang jelas, aku tidak bisa membayangkan hidup tanpa kamu di dalamnya. Kamu adalah bagian dari setiap kebahagiaan, setiap harapan, setiap mimpi yang aku miliki sekarang.
+      </p>
+      <p>
+        Ainiku..
+        Mencintaimu adalah hal termudah dan terindah yang pernah aku lakukan.
+        Dan aku akan selalu memilihmu, dalam setiap versi hidupku,
+        setiap saat, tanpa pernah ragu.
+        Love you, for today, tomorrow, and all the days after. Always and forever.
+      </p>
+      <!-- ▲▲▲ SAMPAI SINI ▲▲▲ -->
+
+    </div>
+    <p class="letter-sign">Yours always, Rasya 🌹</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     ALASAN MENCINTAI — Bahasa Indonesia
+     Ganti judul & isi tiap kartu sesuai keinginanmu!
+     ============================================================ -->
+<section class="reasons-section">
+  <p class="section-label">Ada banyak alasan</p>
+  <h2 class="section-title">Mengapa bisa aku jatuh hati <em>padamu</em></h2>
+  <div class="reasons-grid" id="reasonsGrid">
+
+    <!-- ▼▼▼ GANTI ISI KARTU-KARTU DI BAWAH INI ▼▼▼ -->
+    <div class="reason-card">
+      <div class="reason-num">01</div>
+      <div class="reason-title">Caramu membuatku merasa</div>
+      <p class="reason-text">Di dekatmu, aku menjadi versi terbaik dari diriku sendiri. Kamu punya anugerah langka — membuat orang merasa diperhatikan, didengar, dan benar-benar dicintai.</p>
+    </div>
+    <div class="reason-card">
+      <div class="reason-num">02</div>
+      <div class="reason-title">Caramu membuatku merasa aman</div>
+      <p class="reason-text">Sama kamu, aku ngerasa aman tanpa ada rasa takut untuk jatuh sejatuh jatuhnya.</p>
+    </div>
+    <div class="reason-card">
+      <div class="reason-num">03</div>
+      <div class="reason-title">Magismu yang membuat waktuku terasa istimewa</div>
+      <p class="reason-text">Sore yang sederhana, malam yang tenang,  — segalanya lebih baik dan lebih hidup ketika kamu ada di sini.</p>
+    </div>
+    <div class="reason-card">
+      <div class="reason-num">04</div>
+      <div class="reason-title">Caramu membuatku tertawa</div>
+      <p class="reason-text">Kamu memiliki cara unik untuk membuatku tertawa, bahkan saat aku sedang tidak enak badan. Tertawa bersamamu adalah obat terbaik untukku setiap hari.</p>
+    </div>
+    <div class="reason-card">
+      <div class="reason-num">05</div>
+      <div class="reason-title">Karena kamu adalah kamu</div>
+      <p class="reason-text">Bukan karena satu alasan saja — tapi karena seluruh dirimu. Setiap hal kecil yang menjadikanmu Aini. Itu lebih dari cukup. Itu segalanya.</p>
+    </div>
+    <div class="reason-card">
+      <div class="reason-num">06</div>
+      <div class="reason-title">Karena kamu "DUNIAKU"</div>
+      <p class="reason-text">Di dunia yang penuh kebisingan, kamu adalah ketenangan tempatku pulang. Bersamamu, aku bisa menjadi diriku sendiri — dan itu adalah hadiah terbesar.</p>
+    </div>
+    <!-- ▲▲▲ SAMPAI SINI ▲▲▲ -->
+
+  </div>
+</section>
+
+<!-- ============================================================
+     PENUTUP — Bahasa Indonesia
+     ============================================================ -->
+<section class="closing-section">
+  <!-- ▼ Ganti kutipan penutup di sini ▼ -->
+  <p class="closing-quote">
+    "If i had to repeat the past, i would choose you every single time.
+    Because loving you is the most beautiful thing that ever happened to me.
+    I love you, Aini. Always have, always will."
+  </p>
+  <p class="closing-from">— Rasya, Forever yours.</p>
+  <!-- ▲ Sampai sini ▲ -->
+  <span class="rose-big">🌹</span>
+</section>
+
+<!-- ============================================================
+     PESAN RAHASIA — tombol muncul setelah closing section
+     ============================================================ -->
+<div class="secret-trigger">
+  <button class="secret-btn" id="secretBtn">✦ ada sesuatu untukmu ✦</button>
+</div>
+
+<!-- Modal overlay pesan rahasia -->
+<div class="secret-overlay" id="secretOverlay">
+  <div class="secret-modal" id="secretModal">
+    <span class="s-hearts">🌹💗🌹</span>
+    <p class="s-title">Secret Message</p>
+    <p class="s-message">
+      "AINIII AKU GAMAU KEHILANGAN KAMU!!<br>JADI PACARKU!!<br>PLEASE!!"
+    </p>
+    <span class="s-sign">— Rasya, yours forever 🌹</span>
+    <button class="secret-close" id="secretClose">tutup</button>
+  </div>
+</div>
+
+<script>
+  // Falling petals
+  const canvas = document.getElementById('petals');
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    const s = 8 + Math.random() * 10;
+    p.style.cssText = `left:${Math.random()*100}%;width:${s}px;height:${s*1.3}px;animation-duration:${6+Math.random()*8}s;animation-delay:${Math.random()*10}s;border-radius:${40+Math.random()*20}% ${10+Math.random()*15}% ${40+Math.random()*20}% ${10+Math.random()*15}%;`;
+    canvas.appendChild(p);
+  }
+
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const delay = e.target.closest('#reasonsGrid')
+        ? Array.from(e.target.parentNode.children).indexOf(e.target) * 110 : 0;
+      setTimeout(() => e.target.classList.add('visible'), delay);
+      obs.unobserve(e.target);
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.letter-card, .reason-card, #photoFrame').forEach(el => obs.observe(el));
+
+  // Photo caption reveal
+  const capObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        document.getElementById('photoCaption').classList.add('visible');
+        capObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  capObs.observe(document.getElementById('photoFrame'));
+
+  // Secret message
+  const overlay  = document.getElementById('secretOverlay');
+  const modal    = document.getElementById('secretModal');
+  const openBtn  = document.getElementById('secretBtn');
+  const closeBtn = document.getElementById('secretClose');
+
+  function burstPetals() {
+    const emojis = ['🌹','💗','✨','🌸','💕'];
+
+    for (let i = 0; i < 12; i++) {
+
+      const el = document.createElement('span');
+      el.className = 'burst-petal';
+      el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+
+      const angle = (i / 12) * 360;
+      const dist  = 80 + Math.random() * 60;
+
+      const tx = Math.cos(angle * Math.PI / 180) * dist + 'px';
+      const ty = Math.sin(angle * Math.PI / 180) * dist + 'px';
+      const tr = (Math.random() * 360 - 180) + 'deg';
+
+      el.style.cssText = `
+        --tx:${tx};
+        --ty:${ty};
+        --tr:${tr};
+        left:50%;
+        top:50%;
+        transform:translate(-50%,-50%);
+        animation-delay:${Math.random()*0.2}s
+      `;
+
+      modal.appendChild(el);
+
+      setTimeout(() => el.remove(), 1500);
+    }
+  }
+
+  openBtn.addEventListener('click', () => {
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+
+    setTimeout(burstPetals, 200);
+  });
+
+  function closeModal() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  closeBtn.addEventListener('click', closeModal);
+
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) closeModal();
+  });
+
+  // =========================================================
+  // BACKGROUND MUSIC FIX
+  // =========================================================
+
+  
+const music = document.getElementById('bgMusic');
+const musicBtn = document.getElementById('musicBtn');
+
+let isPlaying = false;
+
+// volume
+music.volume = 0.7;
+
+// otomatis play setelah user klik layar pertama kali
+document.addEventListener('click', async () => {
+
+  if (!isPlaying) {
+
+    try {
+
+      await music.play();
+
+      isPlaying = true;
+
+      musicBtn.innerHTML = '🌹';
+      musicBtn.classList.add('playing');
+
+    } catch(err) {
+      console.log(err);
+    }
+
+  }
+
+}, { once:true });
+
+
+// tombol manual pause/play
+musicBtn.addEventListener('click', async (e) => {
+
+  e.stopPropagation();
+
+  if (isPlaying) {
+
+    music.pause();
+
+    isPlaying = false;
+
+    musicBtn.innerHTML = '🥀';
+    musicBtn.classList.remove('playing');
+
+  } else {
+
+    await music.play();
+
+    isPlaying = true;
+
+    musicBtn.innerHTML = '🌹';
+    musicBtn.classList.add('playing');
+
+  }
+
+});
+</script>
+
+
+</body>
+</html>
