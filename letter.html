@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Late Night Messages 🌙</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+:root{
+  --bg:#0f0f13;
+  --card:#17171d;
+  --soft:#23232c;
+  --pink:#ff9eb5;
+  --text:#f5f5f7;
+  --muted:#a3a3ad;
+}
+
+body{
+  background:
+    radial-gradient(circle at top left,
+    rgba(255,158,181,.12),
+    transparent 25%),
+
+    radial-gradient(circle at bottom right,
+    rgba(255,255,255,.05),
+    transparent 30%),
+
+    var(--bg);
+
+  color:var(--text);
+
+  font-family:'Manrope',sans-serif;
+
+  overflow-x:hidden;
+}
+
+/* =========================================
+HEADER
+========================================= */
+
+.hero{
+  padding:90px 24px 50px;
+  text-align:center;
+}
+
+.hero small{
+  color:var(--pink);
+
+  text-transform:uppercase;
+  letter-spacing:.35em;
+
+  font-size:10px;
+}
+
+.hero h1{
+  margin-top:20px;
+
+  font-family:'Playfair Display',serif;
+
+  font-size:clamp(3rem,8vw,5rem);
+  font-weight:500;
+
+  line-height:1.1;
+}
+
+.hero p{
+  margin:18px auto 0;
+
+  max-width:620px;
+
+  color:var(--muted);
+
+  line-height:1.8;
+}
+
+/* =========================================
+CHAT WRAP
+========================================= */
+
+.chat-wrap{
+  max-width:950px;
+  margin:auto;
+
+  padding:20px 20px 100px;
+}
+
+/* =========================================
+DAY LABEL
+========================================= */
+
+.day{
+  text-align:center;
+
+  margin:45px 0 30px;
+
+  color:#7f7f89;
+
+  font-size:12px;
+
+  letter-spacing:.25em;
+  text-transform:uppercase;
+}
+
+/* =========================================
+MESSAGE
+========================================= */
+
+.msg{
+  display:flex;
+  margin-bottom:24px;
+}
+
+.msg.me{
+  justify-content:flex-end;
+}
+
+.bubble{
+  max-width:75%;
+
+  padding:18px 20px;
+
+  border-radius:26px;
+
+  position:relative;
+
+  backdrop-filter:blur(10px);
+
+  animation:fade .6s ease;
+}
+
+/* DIA */
+
+.msg.her .bubble{
+  background:rgba(255,255,255,.05);
+
+  border:1px solid rgba(255,255,255,.06);
+
+  border-bottom-left-radius:8px;
+}
+
+/* KAMU */
+
+.msg.me .bubble{
+  background:
+    linear-gradient(
+      135deg,
+      #ff8ca8,
+      #ffb6c8
+    );
+
+  color:#1d1114;
+
+  border-bottom-right-radius:8px;
+}
+
+/* name */
+
+.user{
+  font-size:11px;
+
+  text-transform:uppercase;
+
+  letter-spacing:.18em;
+
+  margin-bottom:10px;
+
+  opacity:.75;
+}
+
+/* text */
+
+.text{
+  line-height:1.8;
+  font-size:.96rem;
+}
+
+/* time */
+
+.time{
+  margin-top:12px;
+
+  font-size:11px;
+
+  opacity:.55;
+}
+
+/* =========================================
+VOICE STYLE CARD
+========================================= */
+
+.memory-card{
+  margin:50px auto;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.04),
+      rgba(255,255,255,.02)
+    );
+
+  border:1px solid rgba(255,255,255,.06);
+
+  border-radius:28px;
+
+  padding:35px;
+
+  text-align:center;
+
+  max-width:700px;
+}
+
+.memory-card h2{
+  font-family:'Playfair Display',serif;
+
+  font-size:2rem;
+
+  margin-bottom:14px;
+}
+
+.memory-card p{
+  color:var(--muted);
+
+  line-height:1.9;
+}
+
+/* =========================================
+BUTTON
+========================================= */
+
+.back{
+  display:flex;
+  justify-content:center;
+
+  padding-bottom:90px;
+}
+
+.back a{
+  text-decoration:none;
+
+  color:white;
+
+  border:1px solid rgba(255,255,255,.12);
+
+  padding:14px 34px;
+
+  border-radius:100px;
+
+  letter-spacing:.15em;
+
+  text-transform:uppercase;
+
+  font-size:11px;
+
+  transition:.35s ease;
+}
+
+.back a:hover{
+  background:white;
+  color:#111;
+}
+
+/* =========================================
+ANIMATION
+========================================= */
+
+@keyframes fade{
+
+  from{
+    opacity:0;
+    transform:translateY(18px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+}
+
+/* =========================================
+MOBILE
+========================================= */
+
+@media(max-width:768px){
+
+  .bubble{
+    max-width:88%;
+  }
+
+  .memory-card{
+    padding:28px 24px;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+  <audio id="bgMusic" loop preload="auto">
+  <source src="musik3.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Tombol Musik -->
+<button class="music-btn" id="musicBtn">🌹</button>
+
+<div class="petals-canvas" id="petals"></div>
+
+<!-- =========================================
+HEADER
+========================================= -->
+
+<section class="hero">
+
+  <small>messages</small>
+
+  <h1>
+    Late Night <span style="color:#ff9eb5;">Messages</span>
+  </h1>
+
+  <p>
+    Pesan kecil yang mungkin sederhana,
+    tapi bikin hariku terasa lebih hangat.
+  </p>
+
+</section>
+
+<!-- =========================================
+CHAT
+========================================= -->
+
+<section class="chat-wrap">
+
+  <div class="day">
+    midnight conversation
+  </div>
+
+  <!-- DIA -->
+
+  <div class="msg her">
+
+    <div class="bubble">
+
+      <div class="user">Aini</div>
+
+      <div class="text">
+       andai kamu tau, aku sayang kamu rasya. aku cuma gengsi buat nunjukin itu.
+      </div>
+
+      <div class="time">
+        23:48
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- KAMU -->
+
+  <div class="msg me">
+
+    <div class="bubble">
+
+      <div class="user">Rasya</div>
+
+      <div class="text">
+        hehe aku tau kok kamu gmau kehilangan aku, aku juga sayang kamu. lebih dari yang kamu tau.
+      </div>
+
+      <div class="time">
+        23:49
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- DIA -->
+
+  <div class="msg her">
+
+    <div class="bubble">
+
+      <div class="user">Aini</div>
+
+      <div class="text">
+        aku takut kamu bosen, rasya. aku gamau kehilangan kamu.
+      </div>
+
+      <div class="time">
+        23:49
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- KAMU -->
+
+  <div class="msg me">
+
+    <div class="bubble">
+
+      <div class="user">Rasya</div>
+
+      <div class="text">
+        aku gabakal pergi dari kamu, aku bakal stay di sini buat kamu, aku janji.
+      </div>
+
+      <div class="time">
+        23:50
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- MEMORY CARD -->
+
+  <div class="memory-card">
+
+    <h2>little piece of us</h2>
+
+    <p>
+      Kadang bukan tentang chat panjangnya,
+      tapi tentang siapa yang selalu kita tunggu notifnya.
+    </p>
+
+  </div>
+
+  <!-- DIA -->
+
+  <div class="msg her">
+
+    <div class="bubble">
+
+      <div class="user">Aini</div>
+
+      <div class="text">
+        jangan ilang ya sya?
+      </div>
+
+      <div class="time">
+        00:07
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- KAMU -->
+
+  <div class="msg me">
+
+    <div class="bubble">
+
+      <div class="user">Rasya</div>
+
+      <div class="text">
+        gabakal.
+      </div>
+
+      <div class="time">
+        00:08
+      </div>
+
+    </div>
+
+  </div>
+
+    <div class="msg me">
+
+    <div class="bubble">
+
+      <div class="user">Rasya</div>
+
+      <div class="text">
+        lupyu sil 🤍
+      </div>
+
+      <div class="time">
+        00:08
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================================
+BUTTON
+========================================= -->
+
+<div class="back">
+
+  <a href="index.html">
+    back home
+  </a>
+
+</div>
+
+<script>
+  const music = document.getElementById('bgMusic');
+const musicBtn = document.getElementById('musicBtn');
+
+let isPlaying = false;
+
+// volume
+music.volume = 0.7;
+
+// otomatis play setelah user klik layar pertama kali
+document.addEventListener('click', async () => {
+
+  if (!isPlaying) {
+
+    try {
+
+      await music.play();
+
+      isPlaying = true;
+
+      musicBtn.innerHTML = '🌹';
+      musicBtn.classList.add('playing');
+
+    } catch(err) {
+      console.log(err);
+    }
+
+  }
+
+}, { once:true });
+
+
+// tombol manual pause/play
+musicBtn.addEventListener('click', async (e) => {
+
+  e.stopPropagation();
+
+  if (isPlaying) {
+
+    music.pause();
+
+    isPlaying = false;
+
+    musicBtn.innerHTML = '🥀';
+    musicBtn.classList.remove('playing');
+
+  } else {
+
+    await music.play();
+
+    isPlaying = true;
+
+    musicBtn.innerHTML = '🌹';
+    musicBtn.classList.add('playing');
+
+  }
+
+});
+</script>
+
+</body>
+</html>

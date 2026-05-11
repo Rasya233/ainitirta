@@ -481,11 +481,21 @@ MOBILE
   }
 
 }
+}
 
 </style>
 </head>
 
 <body>
+
+  <audio id="bgMusic" loop preload="auto">
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Tombol Musik -->
+<button class="music-btn" id="musicBtn">🌹</button>
+
+<div class="petals-canvas" id="petals"></div>
 
 <!-- =========================================================
 PETALS
@@ -628,11 +638,41 @@ GALLERY
         </p>
 
         <h2 class="gallery-title">
-          Just You
+          My Favorite Person
         </h2>
 
         <p class="gallery-text">
           Dan dari semua hal yang pernah hadir di hidupku, kamu tetap favoritku.
+        </p>
+
+      </div>
+
+    </div>
+
+
+      <!-- CARD 4 -->
+    <div class="gallery-card">
+
+      <div class="gallery-img">
+
+        <img src="aini4.jpeg" alt="gallery">
+
+        <div class="gallery-overlay"></div>
+
+      </div>
+
+      <div class="gallery-content">
+
+        <p class="gallery-date">
+          
+        </p>
+
+        <h2 class="gallery-title">
+          The Cutest
+        </h2>
+
+        <p class="gallery-text">
+          Makin diliat makin sayang, makin sayang makin pengen liat terus.
         </p>
 
       </div>
@@ -686,6 +726,64 @@ for(let i=0;i<18;i++){
   petals.appendChild(p);
 
 }
+
+const music = document.getElementById('bgMusic');
+const musicBtn = document.getElementById('musicBtn');
+
+let isPlaying = false;
+
+// volume
+music.volume = 0.7;
+
+// otomatis play setelah user klik layar pertama kali
+document.addEventListener('click', async () => {
+
+  if (!isPlaying) {
+
+    try {
+
+      await music.play();
+
+      isPlaying = true;
+
+      musicBtn.innerHTML = '🌹';
+      musicBtn.classList.add('playing');
+
+    } catch(err) {
+      console.log(err);
+    }
+
+  }
+
+}, { once:true });
+
+
+// tombol manual pause/play
+musicBtn.addEventListener('click', async (e) => {
+
+  e.stopPropagation();
+
+  if (isPlaying) {
+
+    music.pause();
+
+    isPlaying = false;
+
+    musicBtn.innerHTML = '🥀';
+    musicBtn.classList.remove('playing');
+
+  } else {
+
+    await music.play();
+
+    isPlaying = true;
+
+    musicBtn.innerHTML = '🌹';
+    musicBtn.classList.add('playing');
+
+  }
+
+});
 
 </script>
 
