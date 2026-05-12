@@ -15,20 +15,25 @@
     --gold: #c9a84c;
     --cream: #faf6f0;
     --dark: #1a0a0e;
-    --text: #3a1a22;
+    --text: #f4e8ec;
+    --text-light: #e8d5dc;
+    --text-muted: #b89ca5;
+    --card-bg: rgba(255, 255, 255, 0.08);
+    --card-glow: rgba(192, 67, 90, 0.15);
   }
 
   html { scroll-behavior: smooth; }
 
   body {
-    background: var(--cream);
+    background: var(--dark);
     color: var(--text);
     font-family: 'Jost', sans-serif;
     font-weight: 300;
     overflow-x: hidden;
+    line-height: 1.6;
   }
 
-  /* Petals */
+  /* Petals - adjusted for dark theme */
   .petals-canvas { position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden; }
   .petal {
     position:absolute;top:-40px;
@@ -44,7 +49,7 @@
     100%{transform:translateY(110vh) translateX(60px) rotate(380deg);opacity:0}
   }
 
-  /* Hero — pembuka tetap Inggris */
+  /* Hero */
   .hero {
     position:relative;min-height:100vh;
     display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -53,24 +58,26 @@
   .hero::before {
     content:'';position:absolute;inset:0;z-index:-1;
     background:
-      radial-gradient(ellipse 70% 60% at 50% 40%,#f9e8ec 0%,transparent 70%),
-      radial-gradient(ellipse 40% 40% at 20% 80%,#fce4e8 0%,transparent 60%),
-      radial-gradient(ellipse 30% 30% at 80% 20%,#fceef0 0%,transparent 60%);
+      radial-gradient(ellipse 70% 60% at 50% 40%,rgba(192,67,90,.15) 0%,transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 80%,rgba(232,160,174,.1) 0%,transparent 60%),
+      radial-gradient(ellipse 30% 30% at 80% 20%,rgba(244,184,196,.08) 0%,transparent 60%);
   }
   .to-label {
     font-weight:200;font-size:11px;letter-spacing:.35em;text-transform:uppercase;
-    color:var(--rose);opacity:0;animation:fadeUp 1s ease .3s forwards;
+    color:var(--rose-light);opacity:0;animation:fadeUp 1s ease .3s forwards;
   }
   .hero-name {
     font-family:'Cormorant Garamond',serif;font-weight:300;
-    font-size:clamp(3.2rem,10vw,6.5rem);line-height:1.05;color:var(--dark);
+    font-size:clamp(3.2rem,10vw,6.5rem);line-height:1.05;color:var(--text);
     margin:12px 0 6px;opacity:0;animation:fadeUp 1s ease .6s forwards;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.5);
   }
-  .hero-name span{font-style:italic;color:var(--rose)}
+  .hero-name span{font-style:italic;color:var(--rose-light)}
   .hero-sub {
     font-family:'Cormorant Garamond',serif;font-style:italic;
-    font-size:clamp(1rem,3vw,1.4rem);color:#8b4a57;margin-bottom:40px;
+    font-size:clamp(1rem,3vw,1.4rem);color:var(--text-muted);margin-bottom:40px;
     opacity:0;animation:fadeUp 1s ease .9s forwards;
+    text-shadow: 0 1px 10px rgba(0,0,0,0.6);
   }
   .heart-divider {
     display:flex;align-items:center;gap:16px;margin:20px auto 30px;
@@ -81,23 +88,22 @@
     background:linear-gradient(to right,transparent,var(--rose-light));
   }
   .heart-divider::after{background:linear-gradient(to left,transparent,var(--rose-light))}
-  .heart-divider .hrt{font-size:18px;color:var(--rose);animation:pulse 2s ease-in-out infinite}
-  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}
-}
+  .heart-divider .hrt{font-size:18px;color:var(--rose-light);animation:pulse 2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
 
- .scroll-hint {
-  position: absolute;
-  bottom: 32px;
-  left: 0;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  opacity: 0;
-  animation: fadeUp 1s ease 2s forwards;
-}
+  .scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeUp 1s ease 2s forwards;
+  }
   .scroll-hint span{font-size:10px;letter-spacing:.2em;color:var(--rose-light);text-transform:uppercase}
   .scroll-arrow{width:1px;height:40px;background:linear-gradient(to bottom,var(--rose-light),transparent);animation:scrollPulse 1.5s ease-in-out infinite}
   @keyframes scrollPulse{0%,100%{opacity:.4}50%{opacity:1}}
@@ -105,7 +111,6 @@
 /* =========================================================
 PHOTO SECTION
 ========================================================= */
-
 .photo-section{
   position:relative;
   z-index:1;
@@ -125,18 +130,12 @@ PHOTO SECTION
   margin-bottom:32px;
 }
 
-/* =========================================================
-PHOTO WRAPPER
-========================================================= */
-
 .photo-wrapper{
   position:relative;
   display:flex;
   align-items:center;
   justify-content:center;
 }
-
-/* glow belakang */
 
 .photo-wrapper::before{
   content:'';
@@ -145,48 +144,38 @@ PHOTO WRAPPER
   height:520px;
   background:radial-gradient(
     circle,
-    rgba(232,160,174,.22),
+    rgba(232,160,174,.15),
     transparent 70%
   );
   z-index:-2;
   animation:glowFloat 6s ease-in-out infinite;
 }
 
-/* ring decorative */
-
 .photo-wrapper::after{
   content:'';
   position:absolute;
   width:430px;
   height:430px;
-  border:1px solid rgba(192,67,90,.15);
+  border:1px solid rgba(192,67,90,.2);
   border-radius:50%;
   z-index:-1;
   animation:spinSlow 20s linear infinite;
 }
 
-/* =========================================================
-MAIN PHOTO
-========================================================= */
-
 .photo-frame{
   width:360px;
   height:470px;
-  border:.5px solid #e8c8ce;
-
+  border:.5px solid rgba(232,160,174,.3);
   box-shadow:
-    0 8px 50px rgba(192,67,90,.18),
-    0 0 0 10px rgba(253,240,242,.75);
-
+    0 8px 50px var(--card-glow),
+    0 0 0 10px rgba(192,67,90,.08),
+    inset 0 0 20px rgba(255,255,255,.05);
   overflow:hidden;
   position:relative;
-
   opacity:0;
   transform:translateY(24px);
-
-  transition:
-    opacity .8s ease,
-    transform .8s ease;
+  transition:opacity .8s ease,transform .8s ease;
+  background: var(--card-bg);
 }
 
 .photo-frame.visible{
@@ -206,18 +195,12 @@ MAIN PHOTO
   transform:scale(1.05);
 }
 
-/* =========================================================
-FLOATING DECORATIONS
-========================================================= */
-
 .float-item{
   position:absolute;
   color:var(--rose-light);
   pointer-events:none;
   user-select:none;
 }
-
-/* bunga kiri atas */
 
 .float-flower-1{
   top:-25px;
@@ -226,16 +209,12 @@ FLOATING DECORATIONS
   animation:floatOne 4s ease-in-out infinite;
 }
 
-/* hati kanan */
-
 .float-heart{
   top:80px;
   right:-55px;
   font-size:30px;
   animation:floatTwo 5s ease-in-out infinite;
 }
-
-/* sparkle kiri bawah */
 
 .float-sparkle{
   bottom:40px;
@@ -244,8 +223,6 @@ FLOATING DECORATIONS
   animation:floatThree 6s ease-in-out infinite;
 }
 
-/* rose kanan bawah */
-
 .float-rose{
   bottom:-20px;
   right:-45px;
@@ -253,99 +230,56 @@ FLOATING DECORATIONS
   animation:floatFour 5s ease-in-out infinite;
 }
 
-/* tulisan kecil aesthetic */
-
 .photo-side-text{
   position:absolute;
   right:-170px;
   top:50%;
   transform:translateY(-50%) rotate(90deg);
-
   font-size:11px;
   letter-spacing:.4em;
   text-transform:uppercase;
-
-  color:rgba(192,67,90,.45);
+  color:rgba(232,160,174,.6);
 }
 
-/* =========================================================
-ANIMATIONS
-========================================================= */
-
 @keyframes glowFloat{
-  0%,100%{
-    transform:scale(1);
-    opacity:.7;
-  }
-
-  50%{
-    transform:scale(1.08);
-    opacity:1;
-  }
+  0%,100%{transform:scale(1);opacity:.6;}
+  50%{transform:scale(1.08);opacity:1;}
 }
 
 @keyframes spinSlow{
-  from{
-    transform:rotate(0deg);
-  }
-
-  to{
-    transform:rotate(360deg);
-  }
+  from{transform:rotate(0deg);}
+  to{transform:rotate(360deg);}
 }
 
 @keyframes floatOne{
-  0%,100%{
-    transform:translateY(0) rotate(-8deg);
-  }
-
-  50%{
-    transform:translateY(-12px) rotate(8deg);
-  }
+  0%,100%{transform:translateY(0) rotate(-8deg);}
+  50%{transform:translateY(-12px) rotate(8deg);}
 }
 
 @keyframes floatTwo{
-  0%,100%{
-    transform:translateY(0);
-  }
-
-  50%{
-    transform:translateY(-14px);
-  }
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-14px);}
 }
 
 @keyframes floatThree{
-  0%,100%{
-    transform:translateY(0) rotate(0deg);
-  }
-
-  50%{
-    transform:translateY(-10px) rotate(15deg);
-  }
+  0%,100%{transform:translateY(0) rotate(0deg);}
+  50%{transform:translateY(-10px) rotate(15deg);}
 }
 
 @keyframes floatFour{
-  0%,100%{
-    transform:translateY(0);
-  }
-
-  50%{
-    transform:translateY(-16px);
-  }
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-16px);}
 }
-
-/* =========================================================
-CAPTION
-========================================================= */
 
 .photo-caption{
   margin-top:28px;
   font-family:'Cormorant Garamond',serif;
   font-style:italic;
   font-size:1.15rem;
-  color:#8b4a57;
+  color:var(--text-muted);
   opacity:0;
   transition:opacity .8s ease .3s;
+  text-shadow: 0 1px 10px rgba(0,0,0,0.8);
 }
 
 .photo-caption.visible{
@@ -353,60 +287,8 @@ CAPTION
 }
 
 /* =========================================================
-RESPONSIVE MOBILE
-========================================================= */
-
-@media (max-width:768px){
-
-  .photo-frame{
-    width:260px;
-    height:360px;
-  }
-
-  .photo-wrapper::before{
-    width:360px;
-    height:360px;
-  }
-
-  .photo-wrapper::after{
-    width:300px;
-    height:300px;
-  }
-
-  .float-flower-1{
-    left:-20px;
-    top:-15px;
-    font-size:32px;
-  }
-
-  .float-heart{
-    right:-20px;
-    top:50px;
-    font-size:24px;
-  }
-
-  .float-sparkle{
-    left:-20px;
-    bottom:20px;
-    font-size:20px;
-  }
-
-  .float-rose{
-    right:-15px;
-    bottom:-10px;
-    font-size:34px;
-  }
-
-  .photo-side-text{
-    display:none;
-  }
-
-}
-
-/* =========================================================
 LOVE MENU SECTION
 ========================================================= */
-
 .love-menu-section{
   position:relative;
   z-index:1;
@@ -426,19 +308,19 @@ LOVE MENU SECTION
   font-family:'Cormorant Garamond',serif;
   font-size:clamp(2rem,5vw,3rem);
   font-weight:300;
-  color:var(--dark);
+  color:var(--text);
   margin-bottom:50px;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.5);
 }
 
 .menu-title em{
-  color:var(--rose);
+  color:var(--rose-light);
   font-style:italic;
 }
 
 .love-menu-grid{
   max-width:950px;
   margin:auto;
-
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
   gap:22px;
@@ -446,45 +328,31 @@ LOVE MENU SECTION
 
 .love-card{
   position:relative;
-
-  background:rgba(255,255,255,.7);
-  backdrop-filter:blur(12px);
-
-  border:1px solid rgba(192,67,90,.12);
-
+  background:var(--card-bg);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(232,160,174,.2);
   padding:34px 28px;
-
   text-decoration:none;
-
   overflow:hidden;
-
-  transition:
-    transform .35s ease,
-    box-shadow .35s ease,
-    border .35s ease;
+  transition:transform .35s ease,box-shadow .35s ease,border .35s ease;
+  border-radius: 12px;
 }
 
 .love-card::before{
   content:'';
   position:absolute;
   inset:0;
-
-  background:
-    radial-gradient(circle at top right,
-    rgba(232,160,174,.12),
-    transparent 40%);
-
+  background:radial-gradient(circle at top right,rgba(232,160,174,.15),transparent 40%);
   opacity:0;
   transition:opacity .35s ease;
 }
 
 .love-card:hover{
   transform:translateY(-8px);
-
-  border-color:rgba(192,67,90,.3);
-
+  border-color:var(--rose-light);
   box-shadow:
-    0 12px 40px rgba(192,67,90,.12);
+    0 20px 60px var(--card-glow),
+    0 0 0 1px rgba(232,160,174,.3);
 }
 
 .love-card:hover::before{
@@ -495,12 +363,13 @@ LOVE MENU SECTION
   display:block;
   font-size:34px;
   margin-bottom:18px;
+  filter: drop-shadow(0 2px 8px rgba(192,67,90,.3));
 }
 
 .love-card-content h3{
   font-family:'Cormorant Garamond',serif;
   font-size:1.5rem;
-  color:var(--rose);
+  color:var(--rose-light);
   font-weight:400;
   margin-bottom:10px;
 }
@@ -508,17 +377,15 @@ LOVE MENU SECTION
 .love-card-content p{
   font-size:.92rem;
   line-height:1.8;
-  color:#6b3a44;
+  color:var(--text-muted);
 }
 
 .love-arrow{
   position:absolute;
   right:22px;
   bottom:18px;
-
   font-size:18px;
   color:var(--rose-light);
-
   transition:transform .3s ease;
 }
 
@@ -526,301 +393,323 @@ LOVE MENU SECTION
   transform:translate(4px,-4px);
 }
 
-/* MOBILE */
-
-@media (max-width:768px){
-
-  .love-menu-section{
-    padding:20px 20px 70px;
-  }
-
-  .love-card{
-    padding:28px 24px;
-  }
-
+/* Letter */
+.letter-section{position:relative;z-index:1;padding:60px 24px 100px;display:flex;justify-content:center}
+.letter-card {
+  background:var(--card-bg);
+  backdrop-filter:blur(20px);
+  max-width:680px;width:100%;
+  padding:clamp(36px,6vw,72px) clamp(32px,6vw,68px);
+  border:1px solid rgba(232,160,174,.25);
+  box-shadow:
+    0 20px 80px rgba(0,0,0,0.4),
+    0 0 0 1px rgba(232,160,174,.2),
+    inset 0 0 20px rgba(255,255,255,.03);
+  position:relative;
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity .8s ease,transform .8s ease;
+  border-radius: 16px;
+}
+.letter-card.visible{opacity:1;transform:translateY(0)}
+.letter-card::before {
+  content:'\201C';
+  position:absolute;
+  top:-10px;
+  left:36px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:120px;
+  color:rgba(232,160,174,.2);
+  line-height:1;
+}
+.letter-date{
+  font-size:11px;
+  letter-spacing:.25em;
+  text-transform:uppercase;
+  color:var(--rose-light);
+  margin-bottom:28px
+}
+.letter-dear{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:1.5rem;
+  color:var(--rose-light);
+  margin-bottom:24px;
+  text-shadow: 0 1px 10px rgba(0,0,0,0.8);
+}
+.letter-body{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.05rem,2.2vw,1.2rem);
+  line-height:1.95;
+  color:var(--text);
+  text-shadow: 0 1px 5px rgba(0,0,0,0.8);
+}
+.letter-body p+p{margin-top:20px}
+.letter-sign{
+  margin-top:36px;
+  text-align:right;
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:1.3rem;
+  color:var(--rose-light);
+  text-shadow: 0 1px 10px rgba(0,0,0,0.8);
 }
 
-  /* Letter */
-  .letter-section{position:relative;z-index:1;padding:60px 24px 100px;display:flex;justify-content:center}
-  .letter-card {
-    background:#fff;max-width:680px;width:100%;
-    padding:clamp(36px,6vw,72px) clamp(32px,6vw,68px);
-    border:.5px solid #e8c8ce;
-    box-shadow:0 2px 40px rgba(192,67,90,.07),0 0 0 8px rgba(253,240,242,.6);
-    position:relative;opacity:0;transform:translateY(30px);
-    transition:opacity .8s ease,transform .8s ease;
-  }
-  .letter-card.visible{opacity:1;transform:translateY(0)}
-  .letter-card::before {
-    content:'\201C';position:absolute;top:-10px;left:36px;
-    font-family:'Cormorant Garamond',serif;font-size:120px;
-    color:var(--rose-light);line-height:1;opacity:.35;
-  }
-  .letter-date{font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--rose-light);margin-bottom:28px}
-  .letter-dear{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.5rem;color:var(--rose);margin-bottom:24px}
-  .letter-body{font-family:'Cormorant Garamond',serif;font-size:clamp(1.05rem,2.2vw,1.2rem);line-height:1.95;color:#4a2530}
-  .letter-body p+p{margin-top:20px}
-  .letter-sign{margin-top:36px;text-align:right;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.3rem;color:var(--rose)}
-
-  /* Reasons */
-  .reasons-section{position:relative;z-index:1;padding:60px 24px 100px;text-align:center}
-  .section-label{font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--rose-light);margin-bottom:12px}
-  .section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3rem);font-weight:300;color:var(--dark);margin-bottom:60px}
-  .section-title em{font-style:italic;color:var(--rose)}
-  .reasons-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;max-width:900px;margin:0 auto}
-  .reason-card {
-    background:#fff;border:.5px solid #f0d0d5;padding:32px 28px;text-align:left;
-    opacity:0;transform:translateY(20px);
-    transition:opacity .6s ease,transform .6s ease,box-shadow .3s;
-  }
-  .reason-card.visible{opacity:1;transform:translateY(0)}
-  .reason-card:hover{box-shadow:0 8px 30px rgba(192,67,90,.1)}
-  .reason-num{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:var(--rose-light);line-height:1;margin-bottom:12px}
-  .reason-title{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;color:var(--rose);margin-bottom:8px}
-  .reason-text{font-size:.88rem;line-height:1.75;color:#6b3a44;font-weight:300}
-
-  /* Closing */
-  .closing-section{position:relative;z-index:1;background:var(--dark);padding:100px 24px;text-align:center;overflow:hidden}
-  .closing-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 50% 50%,#3a0d18,transparent)}
-  .closing-quote{position:relative;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.4rem,4vw,2.2rem);color:#f4c8d0;max-width:640px;margin:0 auto 32px;line-height:1.7;font-weight:300}
-  .closing-from{position:relative;font-size:11px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold)}
-  .rose-big{font-size:48px;display:block;margin:40px auto 0;animation:floatRose 3s ease-in-out infinite}
-  @keyframes floatRose{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-  @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-
-  /* ── PESAN RAHASIA ── */
-  .secret-trigger {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    justify-content: center;
-    padding: 0 24px 80px;
-  }
-  .secret-btn {
-    background: none;
-    border: 0.5px solid var(--rose-light);
-    color: var(--rose-light);
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 1rem;
-    padding: 12px 32px;
-    cursor: pointer;
-    letter-spacing: 0.15em;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-  }
-  .secret-btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--rose-pale);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s ease;
-    z-index: -1;
-  }
-  .secret-btn:hover { color: var(--rose); border-color: var(--rose); }
-  .secret-btn:hover::before { transform: scaleX(1); }
-
-  /* Overlay modal */
-  .secret-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(26, 10, 14, 0.85);
-    z-index: 999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.4s ease;
-  }
-  .secret-overlay.open {
-    opacity: 1;
-    pointer-events: all;
-  }
-  .secret-modal {
-    background: #fff9f9;
-    border: 0.5px solid #e8c8ce;
-    max-width: 480px;
-    width: 100%;
-    padding: 52px 44px;
-    text-align: center;
-    position: relative;
-    transform: translateY(20px) scale(0.97);
-    transition: transform 0.4s ease;
-    box-shadow: 0 0 0 8px rgba(253,240,242,0.4);
-  }
-  .secret-overlay.open .secret-modal {
-    transform: translateY(0) scale(1);
-  }
-  .secret-modal .s-hearts {
-    font-size: 28px;
-    display: block;
-    margin-bottom: 24px;
-    animation: pulse 1.8s ease-in-out infinite;
-  }
-  .secret-modal .s-title {
-    font-size: 10px;
-    letter-spacing: 0.4em;
-    text-transform: uppercase;
-    color: var(--rose-light);
-    margin-bottom: 20px;
-  }
-  .secret-modal .s-message {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.3rem, 4vw, 1.7rem);
-    font-style: italic;
-    color: var(--rose);
-    line-height: 1.7;
-    margin-bottom: 32px;
-  }
-  .secret-modal .s-sign {
-    font-size: 11px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--rose-light);
-    margin-bottom: 32px;
-    display: block;
-  }
-  .secret-close {
-    background: none;
-    border: 0.5px solid var(--rose-light);
-    color: var(--rose-light);
-    font-family: 'Jost', sans-serif;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    padding: 10px 28px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  .secret-close:hover { background: var(--rose-pale); color: var(--rose); border-color: var(--rose); }
-
-  /* Petal burst inside modal */
-  .burst-petal {
-    position: absolute;
-    font-size: 14px;
-    pointer-events: none;
-    animation: burstOut 1.2s ease forwards;
-    opacity: 0;
-  }
-  @keyframes burstOut {
-    0%   { opacity:1; transform: translate(0,0) rotate(0deg) scale(0.5); }
-    100% { opacity:0; transform: translate(var(--tx), var(--ty)) rotate(var(--tr)) scale(1.2); }
-  }
-
-  /* =========================================================
-   RESPONSIVE MOBILE
-   ========================================================= */
-@media (max-width: 768px) {
-
-  /* Hero */
-  .hero {
-    padding: 40px 20px;
-  }
-
-  .hero-name {
-    font-size: 3.2rem;
-    line-height: 1.1;
-  }
-
-  .hero-sub {
-    font-size: 1rem;
-    padding: 0 10px;
-  }
-
-  .heart-divider::before,
-  .heart-divider::after {
-    width: 50px;
-  }
-
-  /* Foto */
-  .photo-section {
-    padding: 60px 20px 30px;
-  }
-
-  .photo-frame {
-    width: 220px;
-    height: 280px;
-  }
-
-  .photo-caption {
-    font-size: 1rem;
-    padding: 0 10px;
-  }
-
-  /* Surat */
-  .letter-section {
-    padding: 40px 16px 80px;
-  }
-
-  .letter-card {
-    padding: 32px 24px;
-  }
-
-  .letter-card::before {
-    font-size: 80px;
-    left: 20px;
-    top: 0;
-  }
-
-  .letter-dear {
-    font-size: 1.3rem;
-  }
-
-  .letter-body {
-    font-size: 1rem;
-    line-height: 1.9;
-  }
-
-  .letter-sign {
-    font-size: 1.1rem;
-  }
-
-  /* Reasons */
-  .reasons-section {
-    padding: 40px 16px 80px;
-  }
-
-  .section-title {
-    margin-bottom: 40px;
-  }
-
-  .reasons-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-  .reason-card {
-    padding: 26px 22px;
-  }
-
-  /* Closing */
-  .closing-section {
-    padding: 80px 20px;
-  }
-
-  .closing-quote {
-    line-height: 1.8;
-  }
-
-  /* Secret modal */
-  .secret-modal {
-    padding: 40px 24px;
-  }
-
-  .secret-modal .s-message {
-    font-size: 1.2rem;
-  }
-
+/* Reasons */
+.reasons-section{position:relative;z-index:1;padding:60px 24px 100px;text-align:center}
+.section-label{
+  font-size:10px;
+  letter-spacing:.4em;
+  text-transform:uppercase;
+  color:var(--rose-light);
+  margin-bottom:12px
+}
+.section-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2rem,5vw,3rem);
+  font-weight:300;
+  color:var(--text);
+  margin-bottom:60px;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+}
+.section-title em{font-style:italic;color:var(--rose-light)}
+.reasons-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:20px;
+  max-width:900px;
+  margin:0 auto
+}
+.reason-card {
+  background:var(--card-bg);
+  backdrop-filter:blur(15px);
+  border:1px solid rgba(232,160,174,.2);
+  padding:32px 28px;
+  text-align:left;
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .6s ease,transform .6s ease,box-shadow .3s;
+  border-radius: 12px;
+}
+.reason-card.visible{opacity:1;transform:translateY(0)}
+.reason-card:hover{
+  box-shadow:
+    0 15px 40px rgba(192,67,90,.2),
+    0 0 0 1px rgba(232,160,174,.3);
+}
+.reason-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.5rem;
+  font-weight:300;
+  color:var(--rose-light);
+  line-height:1;
+  margin-bottom:12px
+}
+.reason-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.15rem;
+  font-style:italic;
+  color:var(--rose-light);
+  margin-bottom:8px
+}
+.reason-text{
+  font-size:.88rem;
+  line-height:1.75;
+  color:var(--text-muted);
+  font-weight:300
 }
 
-  /* =========================================================
-   MUSIC BUTTON
-   ========================================================= */
+/* Closing */
+.closing-section{
+  position:relative;
+  z-index:1;
+  background:linear-gradient(135deg, var(--dark) 0%, #0f0508 100%);
+  padding:100px 24px;
+  text-align:center;
+  overflow:hidden
+}
+.closing-section::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse 70% 70% at 50% 50%,rgba(192,67,90,.08),transparent),
+    radial-gradient(ellipse 40% 40% at 20% 80%,rgba(232,160,174,.05),transparent);
+}
+.closing-quote{
+  position:relative;
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:clamp(1.4rem,4vw,2.2rem);
+  color:var(--text);
+  max-width:640px;
+  margin:0 auto 32px;
+  line-height:1.7;
+  font-weight:300;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.8);
+}
+.closing-from{
+  position:relative;
+  font-size:11px;
+  letter-spacing:.35em;
+  text-transform:uppercase;
+  color:var(--gold);
+  text-shadow: 0 1px 10px rgba(0,0,0,0.8);
+}
+.rose-big{
+  font-size:48px;
+  display:block;
+  margin:40px auto 0;
+  animation:floatRose 3s ease-in-out infinite;
+  filter: drop-shadow(0 4px 20px rgba(192,67,90,.4));
+}
+@keyframes floatRose{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+/* Secret message */
+.secret-trigger {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  padding: 0 24px 80px;
+}
+.secret-btn {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(232,160,174,.3);
+  color: var(--rose-light);
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1rem;
+  padding: 12px 32px;
+  cursor: pointer;
+  letter-spacing: 0.15em;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+}
+.secret-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(232,160,174,.1), rgba(192,67,90,.1));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+  z-index: -1;
+}
+.secret-btn:hover { 
+  color: var(--rose-light); 
+  border-color: var(--rose-light); 
+  box-shadow: 0 8px 30px rgba(192,67,90,.2);
+}
+.secret-btn:hover::before { transform: scaleX(1); }
+
+.secret-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 10, 14, 0.95);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+.secret-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.secret-modal {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(30px);
+  border: 1px solid rgba(232,160,174,.3);
+  max-width: 480px;
+  width: 100%;
+  padding: 52px 44px;
+  text-align: center;
+  position: relative;
+  transform: translateY(20px) scale(0.97);
+  transition: transform 0.4s ease;
+  box-shadow: 
+    0 30px 100px rgba(0,0,0,0.6),
+    0 0 0 1px rgba(232,160,174,.2);
+  border-radius: 20px;
+}
+.secret-overlay.open .secret-modal {
+  transform: translateY(0) scale(1);
+}
+.secret-modal .s-hearts {
+  font-size: 28px;
+  display: block;
+  margin-bottom: 24px;
+  animation: pulse 1.8s ease-in-out infinite;
+  filter: drop-shadow(0 2px 10px rgba(192,67,90,.4));
+}
+.secret-modal .s-title {
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--rose-light);
+  margin-bottom: 20px;
+}
+.secret-modal .s-message {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.3rem, 4vw, 1.7rem);
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.7;
+  margin-bottom: 32px;
+  text-shadow: 0 2px 15px rgba(0,0,0,0.8);
+}
+.secret-modal .s-sign {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--rose-light);
+  margin-bottom: 32px;
+  display: block;
+}
+.secret-close {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(232,160,174,.3);
+  color: var(--rose-light);
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 10px 28px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 6px;
+}
+.secret-close:hover { 
+  background: rgba(232,160,174,.1); 
+  color: var(--rose-light); 
+  border-color: var(--rose-light);
+  box-shadow: 0 5px 20px rgba(192,67,90,.2);
+}
+
+.burst-petal {
+  position: absolute;
+  font-size: 14px;
+  pointer-events: none;
+  animation: burstOut 1.2s ease forwards;
+  opacity: 0;
+  filter: drop-shadow(0 2px 8px rgba(192,67,90,.5));
+}
+@keyframes burstOut {
+  0%   { opacity:1; transform: translate(0,0) rotate(0deg) scale(0.5); }
+  100% { opacity:0; transform: translate(var(--tx), var(--ty)) rotate(var(--tr)) scale(1.2); }
+}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+/* Music button */
 .music-btn{
   position:fixed;
   right:20px;
@@ -829,19 +718,21 @@ LOVE MENU SECTION
   height:55px;
   border-radius:50%;
   border:none;
-  background:rgba(255,255,255,0.15);
-  backdrop-filter:blur(10px);
-  color:#fff;
+  background:rgba(255,255,255,0.1);
+  backdrop-filter:blur(20px);
+  color:var(--rose-light);
   font-size:22px;
   cursor:pointer;
   z-index:9999;
   transition:all .3s ease;
-  border:1px solid rgba(255,255,255,.2);
+  border:1px solid rgba(232,160,174,.3);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
 }
 
 .music-btn:hover{
   transform:scale(1.08);
-  background:rgba(255,255,255,.25);
+  background:rgba(255,255,255,0.2);
+  box-shadow: 0 12px 40px rgba(192,67,90,.3);
 }
 
 .music-btn.playing{
@@ -853,10 +744,52 @@ LOVE MENU SECTION
   50%{transform:scale(1.12);}
   100%{transform:scale(1);}
 }
+
+/* RESPONSIVE */
+@media (max-width:768px){
+  .photo-frame{width:260px;height:360px;}
+  .photo-wrapper::before{width:360px;height:360px;}
+  .photo-wrapper::after{width:300px;height:300px;}
+  .float-flower-1{left:-20px;top:-15px;font-size:32px;}
+  .float-heart{right:-20px;top:50px;font-size:24px;}
+  .float-sparkle{left:-20px;bottom:20px;font-size:20px;}
+  .float-rose{right:-15px;bottom:-10px;font-size:34px;}
+  .photo-side-text{display:none;}
+  
+  .love-menu-section{padding:20px 20px 70px;}
+  .love-card{padding:28px 24px;}
+  
+  .hero {padding: 40px 20px;}
+  .hero-name {font-size: 3.2rem;line-height: 1.1;}
+  .hero-sub {font-size: 1rem;padding: 0 10px;}
+  .heart-divider::before,.heart-divider::after {width: 50px;}
+  
+  .photo-section {padding: 60px 20px 30px;}
+  .photo-frame {width: 220px;height: 280px;}
+  .photo-caption {font-size: 1rem;padding: 0 10px;}
+  
+  .letter-section {padding: 40px 16px 80px;}
+  .letter-card {padding: 32px 24px;border-radius: 12px;}
+  .letter-card::before {font-size: 80px;left: 20px;top: 0;}
+  .letter-dear {font-size: 1.3rem;}
+  .letter-body {font-size: 1rem;line-height: 1.9;}
+  .letter-sign {font-size: 1.1rem;}
+  
+  .reasons-section {padding: 40px 16px 80px;}
+  .section-title {margin-bottom: 40px;}
+  .reasons-grid {grid-template-columns: 1fr;gap: 16px;}
+  .reason-card {padding: 26px 22px;}
+  
+  .closing-section {padding: 80px 20px;}
+  .closing-quote {line-height: 1.8;}
+  
+  .secret-modal {padding: 40px 24px;}
+  .secret-modal .s-message {font-size: 1.2rem;}
+}
 </style>
 </head>
 <body>
-  <!-- Background Music -->
+<!-- Background Music -->
 <audio id="bgMusic" loop preload="auto">
   <source src="musik4.mp3" type="audio/mpeg">
 </audio>
@@ -866,9 +799,7 @@ LOVE MENU SECTION
 
 <div class="petals-canvas" id="petals"></div>
 
-<!-- ============================================================
-     HERO — Pembuka (Bahasa Inggris, sengaja dibiarkan)
-     ============================================================ -->
+<!-- Hero -->
 <section class="hero">
   <p class="to-label">A love letter to</p>
   <h1 class="hero-name">Aini <span>Tirta</span><br>Fawzyah</h1>
@@ -880,158 +811,73 @@ LOVE MENU SECTION
   </div>
 </section>
 
-<!-- ============================================================
-     FOTO PACAR
-     ──────────────────────────────────────────────────────────
-     CARA TAMBAH FOTO:
-     1. Rename foto kamu menjadi:  aini.jpg
-     2. Letakkan file aini.jpg di folder yang SAMA dengan
-        file HTML ini.
-     3. Simpan & buka ulang di browser — foto langsung muncul!
-     ============================================================ -->
+<!-- Photo Section -->
 <section class="photo-section">
-
   <p class="photo-label">Aini punk mjk</p>
-
   <div class="photo-wrapper">
-
-    <!-- dekorasi -->
     <span class="float-item float-flower-1">🌸</span>
     <span class="float-item float-heart">💗</span>
     <span class="float-item float-sparkle">✨</span>
     <span class="float-item float-rose">🌹</span>
-
-    <div class="photo-side-text">
-      forever yours
-    </div>
-
-    <!-- foto -->
+    <div class="photo-side-text">forever yours</div>
     <div class="photo-frame" id="photoFrame">
-
-      <img
-        src="Aini.jpeg"
-        alt="Aini Tirta Fawzyah"
-      >
-
+      <img src="Aini.jpeg" alt="Aini Tirta Fawzyah">
     </div>
-
   </div>
-
-  <p class="photo-caption" id="photoCaption">
-    Cintaku, selamanya. 🌹
-  </p>
-
+  <p class="photo-caption" id="photoCaption">Cintaku, selamanya. 🌹</p>
 </section>
 
-<!-- =========================================================
-     LOVE MENU CARDS
-     ========================================================= -->
+<!-- Love Menu -->
 <section class="love-menu-section">
-
   <p class="menu-label">Little things for you</p>
-
-  <h2 class="menu-title">
-    Open these <em>memories</em>
-  </h2>
-
+  <h2 class="menu-title">Open these <em>memories</em></h2>
   <div class="love-menu-grid">
-
-    <!-- CARD 1 -->
     <a href="gallery.html" class="love-card">
       <span class="love-icon">📸</span>
-
       <div class="love-card-content">
         <h3>Your Photos</h3>
-        <p>
-          Kumpulan foto kamu yang aku simpan dengan penuh cinta. Setiap foto adalah kenangan berharga yang selalu membuatku tersenyum.
-        </p>
+        <p>Kumpulan foto kamu yang aku simpan dengan penuh cinta. Setiap foto adalah kenangan berharga yang selalu membuatku tersenyum.</p>
       </div>
-
       <span class="love-arrow">↗</span>
     </a>
-
-    <!-- CARD 2 -->
     <a href="letter.html" class="love-card">
       <span class="love-icon">💌</span>
-
       <div class="love-card-content">
         <h3>Our Messages</h3>
-        <p>
-         Karangan chat kita yang aku abadiin disini.
-        </p>
+        <p>Karangan chat kita yang aku abadiin disini.</p>
       </div>
-
       <span class="love-arrow">↗</span>
     </a>
-
-    <!-- CARD 3 -->
     <a href="story.html" class="love-card">
       <span class="love-icon">🌹</span>
-
       <div class="love-card-content">
         <h3>Our Story</h3>
-        <p>
-          Tentang bagaimana semuanya dimulai.
-        </p>
+        <p>Tentang bagaimana semuanya dimulai.</p>
       </div>
-
       <span class="love-arrow">↗</span>
     </a>
-
   </div>
-
 </section>
 
-<!-- ============================================================
-     SURAT CINTA — Bahasa Indonesia
-     Ganti isi paragraf sesuai perasaanmu!
-     ============================================================ -->
+<!-- Letter Section -->
 <section class="letter-section">
   <div class="letter-card" id="letterCard">
-
-    <!-- ▼ Ganti tanggal / sub-judul surat ▼ -->
     <p class="letter-date">For my forever love, Aini</p>
-
     <p class="letter-dear">Dear Aini..</p>
     <div class="letter-body">
-
-      <!-- ▼▼▼ GANTI ISI SURAT DI SINI ▼▼▼ -->
-      <p>
-        Ada momen-momen dalam hidup yang datang dengan tenang —
-        bukan dengan sorak-sorai atau kembang api,
-        tapi dengan kehangatan yang begitu lembut hingga membuatmu terkejut.
-        Itulah dirimu bagiku, Aini. Sebuah keajaiban sunyi yang masih selalu membuatku terpesona.
-      </p>
-      <p>
-        Ntah apa yang membuatmu terasa begitu indah dan berharga — sehingga aku merasa beruntung setiap kali memikirkanmu.
-          Mungkin itu caramu tersenyum, atau cara kamu mendengarkan dengan penuh perhatian, atau bagaimana kamu membuat hal-hal sederhana terasa begitu istimewa.
-          Atau mungkin itu hanya karena kamu adalah kamu — dengan segala keunikan dan kehangatan yang kamu bawa ke dunia ini.
-          Yang jelas, aku tidak bisa membayangkan hidup tanpa kamu di dalamnya. Kamu adalah bagian dari setiap kebahagiaan, setiap harapan, setiap mimpi yang aku miliki sekarang.
-      </p>
-      <p>
-        Ainiku..
-        Mencintaimu adalah hal termudah dan terindah yang pernah aku lakukan.
-        Dan aku akan selalu memilihmu, dalam setiap versi hidupku,
-        setiap saat, tanpa pernah ragu.
-        Love you, for today, tomorrow, and all the days after. Always and forever.
-      </p>
-      <!-- ▲▲▲ SAMPAI SINI ▲▲▲ -->
-
+      <p>Ada momen-momen dalam hidup yang datang dengan tenang — bukan dengan sorak-sorai atau kembang api, tapi dengan kehangatan yang begitu lembut hingga membuatmu terkejut. Itulah dirimu bagiku, Aini. Sebuah keajaiban sunyi yang masih selalu membuatku terpesona.</p>
+      <p>Ntah apa yang membuatmu terasa begitu indah dan berharga — sehingga aku merasa beruntung setiap kali memikirkanmu. Mungkin itu caramu tersenyum, atau cara kamu mendengarkan dengan penuh perhatian, atau bagaimana kamu membuat hal-hal sederhana terasa begitu istimewa. Atau mungkin itu hanya karena kamu adalah kamu — dengan segala keunikan dan kehangatan yang kamu bawa ke dunia ini. Yang jelas, aku tidak bisa membayangkan hidup tanpa kamu di dalamnya. Kamu adalah bagian dari setiap kebahagiaan, setiap harapan, setiap mimpi yang aku miliki sekarang.</p>
+      <p>Ainiku.. Mencintaimu adalah hal termudah dan terindah yang pernah aku lakukan. Dan aku akan selalu memilihmu, dalam setiap versi hidupku, setiap saat, tanpa pernah ragu. Love you, for today, tomorrow, and all the days after. Always and forever.</p>
     </div>
     <p class="letter-sign">Yours always, Rasya 🌹</p>
   </div>
 </section>
 
-<!-- ============================================================
-     ALASAN MENCINTAI — Bahasa Indonesia
-     Ganti judul & isi tiap kartu sesuai keinginanmu!
-     ============================================================ -->
+<!-- Reasons Section -->
 <section class="reasons-section">
   <p class="section-label">Ada banyak alasan</p>
   <h2 class="section-title">Mengapa bisa aku jatuh hati <em>padamu</em></h2>
   <div class="reasons-grid" id="reasonsGrid">
-
-    <!-- ▼▼▼ GANTI ISI KARTU-KARTU DI BAWAH INI ▼▼▼ -->
     <div class="reason-card">
       <div class="reason-num">01</div>
       <div class="reason-title">Caramu membuatku merasa</div>
@@ -1062,41 +908,27 @@ LOVE MENU SECTION
       <div class="reason-title">Karena kamu "DUNIAKU"</div>
       <p class="reason-text">Di dunia yang penuh kebisingan, kamu adalah ketenangan tempatku pulang. Bersamamu, aku bisa menjadi diriku sendiri — dan itu adalah hadiah terbesar.</p>
     </div>
-    <!-- ▲▲▲ SAMPAI SINI ▲▲▲ -->
-
   </div>
 </section>
 
-<!-- ============================================================
-     PENUTUP — Bahasa Indonesia
-     ============================================================ -->
+<!-- Closing Section -->
 <section class="closing-section">
-  <!-- ▼ Ganti kutipan penutup di sini ▼ -->
-  <p class="closing-quote">
-    "If i had to repeat the past, i would choose you every single time.
-    Because loving you is the most beautiful thing that ever happened to me.
-    I love you, Aini. Always have, always will."
-  </p>
+  <p class="closing-quote">"If i had to repeat the past, i would choose you every single time. Because loving you is the most beautiful thing that ever happened to me. I love you, Aini. Always have, always will."</p>
   <p class="closing-from">— Rasya, Forever yours.</p>
-  <!-- ▲ Sampai sini ▲ -->
   <span class="rose-big">🌹</span>
 </section>
 
-<!-- ============================================================
-     PESAN RAHASIA — tombol muncul setelah closing section
-     ============================================================ -->
+<!-- Secret Trigger -->
 <div class="secret-trigger">
   <button class="secret-btn" id="secretBtn">✦ DIBUKA YAA ✦</button>
 </div>
 
-<!-- Modal overlay pesan rahasia -->
+<!-- Secret Modal -->
 <div class="secret-overlay" id="secretOverlay">
   <div class="secret-modal" id="secretModal">
     <span class="s-hearts">🌹💗🌹</span>
     <p class="s-title">Secret Message</p>
-    <p class="s-message">
-      "AINIII AKU GAMAU KEHILANGAN KAMU!!<br>STAY HERE WITH ME!!<br>PLEASE!!"
-    </p>
+    <p class="s-message">"AINIII AKU GAMAU KEHILANGAN KAMU!!<br>STAY HERE WITH ME!!<br>PLEASE!!"</p>
     <span class="s-sign">— Rasya, yours forever 🌹</span>
     <button class="secret-close" id="secretClose">tutup</button>
   </div>
@@ -1146,32 +978,17 @@ LOVE MENU SECTION
 
   function burstPetals() {
     const emojis = ['🌹','💗','✨','🌸','💕'];
-
     for (let i = 0; i < 12; i++) {
-
       const el = document.createElement('span');
       el.className = 'burst-petal';
       el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-
       const angle = (i / 12) * 360;
       const dist  = 80 + Math.random() * 60;
-
       const tx = Math.cos(angle * Math.PI / 180) * dist + 'px';
       const ty = Math.sin(angle * Math.PI / 180) * dist + 'px';
       const tr = (Math.random() * 360 - 180) + 'deg';
-
-      el.style.cssText = `
-        --tx:${tx};
-        --ty:${ty};
-        --tr:${tr};
-        left:50%;
-        top:50%;
-        transform:translate(-50%,-50%);
-        animation-delay:${Math.random()*0.2}s
-      `;
-
+      el.style.cssText = `--tx:${tx};--ty:${ty};--tr:${tr};left:50%;top:50%;transform:translate(-50%,-50%);animation-delay:${Math.random()*0.2}s`;
       modal.appendChild(el);
-
       setTimeout(() => el.remove(), 1500);
     }
   }
@@ -1179,7 +996,6 @@ LOVE MENU SECTION
   openBtn.addEventListener('click', () => {
     overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
-
     setTimeout(burstPetals, 200);
   });
 
@@ -1189,75 +1005,45 @@ LOVE MENU SECTION
   }
 
   closeBtn.addEventListener('click', closeModal);
-
   overlay.addEventListener('click', e => {
     if (e.target === overlay) closeModal();
   });
 
-  // =========================================================
-  // BACKGROUND MUSIC FIX
-  // =========================================================
+  // Music controls
+  const music = document.getElementById('bgMusic');
+  const musicBtn = document.getElementById('musicBtn');
+  let isPlaying = false;
 
-  
-const music = document.getElementById('bgMusic');
-const musicBtn = document.getElementById('musicBtn');
+  music.volume = 0.7;
 
-let isPlaying = false;
+  document.addEventListener('click', async () => {
+    if (!isPlaying) {
+      try {
+        await music.play();
+        isPlaying = true;
+        musicBtn.innerHTML = '🌹';
+        musicBtn.classList.add('playing');
+      } catch(err) {
+        console.log(err);
+      }
+    }
+  }, { once:true });
 
-// volume
-music.volume = 0.7;
-
-// otomatis play setelah user klik layar pertama kali
-document.addEventListener('click', async () => {
-
-  if (!isPlaying) {
-
-    try {
-
+  musicBtn.addEventListener('click', async (e) => {
+    e.stopPropagation();
+    if (isPlaying) {
+      music.pause();
+      isPlaying = false;
+      musicBtn.innerHTML = '🥀';
+      musicBtn.classList.remove('playing');
+    } else {
       await music.play();
-
       isPlaying = true;
-
       musicBtn.innerHTML = '🌹';
       musicBtn.classList.add('playing');
-
-    } catch(err) {
-      console.log(err);
     }
-
-  }
-
-}, { once:true });
-
-
-// tombol manual pause/play
-musicBtn.addEventListener('click', async (e) => {
-
-  e.stopPropagation();
-
-  if (isPlaying) {
-
-    music.pause();
-
-    isPlaying = false;
-
-    musicBtn.innerHTML = '🥀';
-    musicBtn.classList.remove('playing');
-
-  } else {
-
-    await music.play();
-
-    isPlaying = true;
-
-    musicBtn.innerHTML = '🌹';
-    musicBtn.classList.add('playing');
-
-  }
-
-});
+  });
 </script>
-
 
 </body>
 </html>
